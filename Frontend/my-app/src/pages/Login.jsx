@@ -1,44 +1,24 @@
-
-
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
-import { Container, Form, Button } from 'react-bootstrap';
-import Home from './Home';
+import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 import Nav from '../components/Nav';
 
 const Login = () => {
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
-    const sendtoaddtocart = () => {
-
-        // const storageResponse = localStorage.getItem("userdata");
-        // let customer = JSON.parse(storageResponse);
-        // console.log("customer", customer);
-        // if (!customer) navigate('/');
-        // navigate
-        // else if (customer) 
-        navigate('/addtocart');
-    }
-
     const signin = async (e) => {
         e.preventDefault();
         const user = { email, password };
-        console.log("Login user:", user);
         try {
             const res = await axios.post('http://localhost:3008/api/v1/customer/login', user);
-            console.log("loginres", res);
-            console.log("Login response:", res.data);
             if (res.data.send === "Successful login") {
-                console.log("login res.data.obj", res.data.obj);
                 let { obj } = res.data;
                 localStorage.setItem('userdata', JSON.stringify(obj));
-                sendtoaddtocart();
-                alert("Successfull login");
-                window.location.reload();
+                alert("Successful login");
+                navigate('/'); // Redirect to home after successful login
             } else {
                 alert("Invalid Email or password");
             }
@@ -51,31 +31,31 @@ const Login = () => {
     return (
         <>
             <Nav />
-            <Container fluid className='d-flex align-items-center justify-content-center bg-image' style={{ backgroundImage: 'url(https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp)' }}>
-                <div className='mask gradient-custom-3'></div>
-                <div className='m-5' style={{ maxWidth: '600px' }}>
-                    <Form className='px-5'>
-                        <h2 className="text-uppercase text-center mb-5">Signin</h2>
-                        <Form.Group className='mb-4'>
-                            <Form.Label>Your Email</Form.Label>
-                            <Form.Control size='lg' type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
-                        </Form.Group>
-                        <Form.Group className='mb-4'>
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control size='lg' type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
-                        </Form.Group>
-                        <Button className='mb-4 w-100 gradient-custom-4' size='lg' onClick={signin}>SignIn</Button>
-                        <div>
-                            <p>Do not have an account?</p>
+            <Container fluid className='bg-light' style={{ minHeight: '100vh' }}    >
+                {/* style={{ minHeight: '100vh' }} */}
+                <Row className='justify-content-center align-items-center mt-5 p-5' >
+                    <Col xs={12} sm={8} md={6} lg={4}>
+                        <div className='p-4 bg-white shadow rounded'>
+                            <h2 className="text-center mb-4">Sign in</h2>
+                            <Form>
+                                <Form.Group className='mb-3'>
+                                    <Form.Control type='email' placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)} />
+                                </Form.Group>
+                                <Form.Group className='mb-4'>
+                                    <Form.Control type='password' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
+                                </Form.Group>
+                                <Button variant='warning' className='w-100 mb-3' onClick={signin} >Sign In</Button>
+                                {/* style={{backgroundColor:"#ff6c00"}} */}
+                                {/* <Link to='/signup' className='d-block text-center'>Create an account</Link> */}
+                                <p className="text-center">
+                                   New Member? <Link to='/signup'>Register</Link>here
+                                </p>
+                            </Form>
                         </div>
-                        <Link to='/signup'>
-                            <Button className='mb-4 w-100 gradient-custom-4' variant='outline-info' size='lg'>Create an account</Button>
-                        </Link>
-                    </Form>
-                </div>
+                    </Col>
+                </Row>
             </Container>
         </>
-
     );
 };
 

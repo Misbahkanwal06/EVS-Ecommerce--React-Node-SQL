@@ -1,9 +1,9 @@
-import React from 'react'
-
+import React, { useEffect, useState } from 'react'
 // import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import axios from 'axios';
 
 // import InputGroup from 'react-bootstrap/InputGroup';
 // import Row from 'react-bootstrap/Row';
@@ -13,25 +13,40 @@ import Button from 'react-bootstrap/Button';
 import { Container, Row, Col, Image } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 
-function Nav() {
-
-
-    // const storageResponse = localStorage.getItem("userdata");
-    // let customer = JSON.parse(storageResponse);
-    // console.log("customer", customer);s
-    // let { fName, lName } = customer;
-    // console.log("fname", fName, lName);
+function Nav({ sum }) {
 
     const storageResponse = localStorage.getItem("userdata");
+
+    // userUpdatedCArt
     let customer = JSON.parse(storageResponse);
     let { fName, lName } = customer || {};
+    console.log("customer", customer);
+
+
+    // SHOW QUANTITY AT CART*************************
+    // const newarr = prodquan.map((e) => {
+    //     console.log("e.TotalQuantity", e.TotalQuantity);
+    //     return e.TotalQuantity;
+    // })
+    // const sum = newarr.reduce((acc, currentValue) => acc + parseInt(currentValue),0);
+    // console.log("Sum of array elements:", sum); 
+
     return (
         <div>
-            <Navbar className=" bg-warning" style={{ height: "70px" }}>
+            <Navbar className=" bg-warning" style={{ height: "80px" }}>
                 <Container>
-
                     {/* <Navbar.Brand href="#home" className='fs-1 text-light'>{fName ? fName : "Nav"}</Navbar.Brand> */}
+                    <Navbar.Brand href="#" className='fs-1 text-light'>
+                        <img
+                            src="https://firebasestorage.googleapis.com/v0/b/images-87f4e.appspot.com/o/logomk.jpg?alt=media&token=ddd27191-5de0-462a-a3aa-a3c6e9ba0877"
+                            width="100"
+                            height="60"
+                            className="d-inline-block align-top"
+                            alt=""
+                        />
+                    </Navbar.Brand>
                     <Navbar.Toggle />
+
                     <Navbar.Collapse className="justify-content-end">
                         <Form inline >
                             <Row className=''>
@@ -40,19 +55,9 @@ function Nav() {
                                         type="text"
                                         placeholder="Search"
                                         className=" mr-sm-2"
+                                        alt=""
                                     />
                                 </Col>
-
-                                {/* <Col xs="auto">
-                                    <div className="logged-in-wrap">
-                                        <img
-                                            className="profile-img"
-                                            id="userImg"
-                                            src="//img.alicdn.com/imgextra/i1/O1CN013ue9Hm1FjZzC0ri2a_!!6000000000523-2-tps-32-32.png"
-                                            alt=""
-                                        />
-                                    </div>
-                                </Col> */}
 
                                 <Col xs="auto">
                                     <img
@@ -61,6 +66,7 @@ function Nav() {
                                         src="//img.alicdn.com/imgextra/i1/O1CN013ue9Hm1FjZzC0ri2a_!!6000000000523-2-tps-32-32.png"
                                         alt=""
                                     />
+
                                     {fName ? fName :
                                         <Link to={'/login'}>
                                             <Button variant="outline-light" id="button-addon2" style={{ border: "0px" }}>
@@ -68,13 +74,6 @@ function Nav() {
                                             </Button>
                                         </Link>
                                     }
-
-                                    {/* <Link to={'/login'}>
-                                        <Button variant="outline-light" id="button-addon2" style={{ border: "0px" }}>
-                                            login
-                                        </Button>
-                                    </Link> */}
-
                                 </Col>
 
                                 {!fName ? <>
@@ -91,11 +90,13 @@ function Nav() {
                                 </> : " "
                                 }
 
-                           
-                                <Col xs="auto">
+
+                                <Col xs="auto" >
+
                                     {/* <Image
                                         src={''}> */}
-                                    <Link to={'/cart'}>
+
+                                    <Link to={'/cart'} style={{ position: 'relative' }}>
                                         <span className="cart-icon" >
                                             <svg
                                                 width={30}
@@ -104,7 +105,7 @@ function Nav() {
                                                 fill="none"
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 data-spm-anchor-id="a2a0e.home.dcart.i0.60674076s78Kco"
-                                            >
+                                            >                                                
                                                 <path
                                                     fillRule="evenodd"
                                                     clipRule="evenodd"
@@ -121,11 +122,11 @@ function Nav() {
                                                 />
                                             </svg>
                                         </span>
+                                        <p className='text-center' style={{ position: 'absolute', top: -10, right: 0, backgroundColor: 'red', margin: 0, padding: '0px', borderRadius: '50%', color: 'white', width: "15px" }}>{sum}</p>
                                     </Link>
 
                                     {/* </Image> */}
                                 </Col>
-                               
                             </Row>
                         </Form>
                     </Navbar.Collapse>

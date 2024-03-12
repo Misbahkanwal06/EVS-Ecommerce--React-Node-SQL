@@ -10,6 +10,7 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import AddToCard from './pages/AddToCard';
 import Cart from './pages/Cart';
+import Orders from './pages/Orders';
 
 // import BeforeLoginRoutes from './routes/BeforeLoginRoutes';
 // import AfterLoginRoutes from './routes/AfterLoginRoutes';
@@ -34,12 +35,12 @@ function App() {
 
   return (
     <Routes>
-
       <Route path='/' element={<Home />} />
       <Route path='/products/:selectedProCatId' element={<Productss />} />
       <Route path='/signup' element={<Signup />} />
       <Route path='/login' element={<Login />} />
       <Route path='/cart' element={<Cart/>}/>
+      <Route path='/order' element={<Orders/>}/>
       {/* <Route path='/addtocart' element={<AddToCard  payloads={payload}/>}/> */}
       {/* <Route path='/products' element={<Productss/>}/> */}
       {/* <Route path='/products' element={<Productss products={products} selectedProCatId={selectedProCatId} />} /> */}

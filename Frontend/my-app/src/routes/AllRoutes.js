@@ -8,12 +8,12 @@ import Home from "../pages/Home";
 
 
 const allRoutes = [
-
     { Name: "home", path: '/', components: <Home/> },
     { Name: "Signup", path: '/signup', components: <Signup/> },
     {Name: "Login", path: '/login', components: <Login/>},
     {Name: "Products", path: '/products/:selectedProCatId', components: <Login/>},
-    {Name: "Add to cart", path: '/addtocart', components: <AddToCard/>}
+    {Name: "Add to cart", path: '/addtocart', components: <AddToCard/>},
+    {Name: "Orders", path: '/order', components: <Orders/>},
 ]
 export default allRoutes;
 

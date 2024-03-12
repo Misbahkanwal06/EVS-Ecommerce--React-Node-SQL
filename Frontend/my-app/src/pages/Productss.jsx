@@ -12,9 +12,8 @@ function Productss() {
 
   const [products, setProducts] = useState([]);
   const { selectedProCatId } = useParams();
-  // console.log("products", products);
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -28,8 +27,9 @@ function Productss() {
   }, [selectedProCatId])
 
 
-  ///
+  ////
   function handleAddToCart(prodId) {
+
     // console.log("productId",proId);
     console.log("prodId", prodId);
     const storageResponse = localStorage.getItem("userdata");
@@ -37,24 +37,25 @@ function Productss() {
     console.log("customer", customer);
     let custId = customer.cstId;
     let quantity = 1;
+    localStorage.setItem(prodId, JSON.stringify({ quantity: 1 }))
     // console.log("customerID",customer.cstId);
     if (!customer) navigate('/signup');
     else {
-      const payloads = { prodId, custId , quantity };
+      const payloads = { prodId, custId, quantity };
       console.log("payloads", payloads);
       const addToCartBtn = async () => {
         try {
           console.log("In try")
           console.log(payloads)
-          const res = await axios.post('http://localhost:3008/api/v1/cart/create',payloads)
+          const res = await axios.post('http://localhost:3008/api/v1/cart/create', payloads)
           console.log('addtocartdata', res);
           console.log("res.data", res.data);
+          navigate('/cart')
         } catch (error) {
           console.error('Error getting categories', error);
         }
       };
       addToCartBtn();
-
 
       // send(payloads);
       // navigate('/addtocart')
@@ -83,7 +84,7 @@ function Productss() {
                   <Card.Text>
                     {product.price}
                   </Card.Text>
-                  <button onClick={() => handleAddToCart(product.proID)}>Add to cart</button>
+                  <button onClick={() => handleAddToCart(product.proID)} className="btn btn-primary btn-block">Add to cart</button>
                 </Card.Body>
               </Card>
             ))}
