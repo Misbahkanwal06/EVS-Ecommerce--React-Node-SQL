@@ -9,10 +9,9 @@ const { createToken, tokenVerification } = require('../Security/jwtToken');
 
 const createCustomer = async (req, res) => {
     console.log(req.body);
-
     try {
         const { fname, lname, email, password, gender } = req.body;
-        const encryptedPass = password && await createHash(password) 
+        const encryptedPass = password && await createHash(password)
         if (!encryptedPass) throw (`Pwd encryption failed`)
         // return encryptedPass;
         // if (encryptedPass) {
@@ -21,7 +20,7 @@ const createCustomer = async (req, res) => {
         let custype = "buyer";
         let createdAt = new Date();
         const query = "INSERT INTO customer(`fName`,`lName`,`email`,`password`,`gender`,`cstType`,`createdat`)VALUES(?,?,?,?,?,?,?)";
-        const values = [fname, lname, email, encryptedPass, gender, custype ,createdAt];
+        const values = [fname, lname, email, encryptedPass, gender, custype, createdAt];
         // ,custype, createdat, updatedat
         const dbresult = await dbSql.execute(query, values);
         // return dbresult;
@@ -44,6 +43,7 @@ const loginCustomer = async (req, res) => {
         console.log("dbresult", dbresult);
         if (dbresult.length === 0) {
             res.send(handleResponse(401, "User not found"));
+            // return res.status(400).json({ error: 'User not found' });
         }
         const user = dbresult[0];
         console.log("user", user);
@@ -64,8 +64,6 @@ const loginCustomer = async (req, res) => {
             }
             res.send(handleResponse(200, "Successful login", user));
         }
-
-        
     } catch (error) {
         console.log(error);
         res.send(handleResponse(500, "Error logging in"));

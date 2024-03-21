@@ -8,15 +8,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import Signup from './pages/Signup';
 import Login from './pages/Login';
-import AddToCard from './pages/AddToCard';
+// import AddToCard from './pages/AddToCard';
 import Cart from './pages/Cart';
 import Orders from './pages/Orders';
 
-// import BeforeLoginRoutes from './routes/BeforeLoginRoutes';
-// import AfterLoginRoutes from './routes/AfterLoginRoutes';
-
 function App() {
-  
+
   // const storageResponse = localStorage.getItem("userdata");
   // let customer = JSON.parse(storageResponse);
   // console.log("customer", customer);
@@ -39,12 +36,8 @@ function App() {
       <Route path='/products/:selectedProCatId' element={<Productss />} />
       <Route path='/signup' element={<Signup />} />
       <Route path='/login' element={<Login />} />
-      <Route path='/cart' element={<Cart/>}/>
-      <Route path='/order' element={<Orders/>}/>
-      {/* <Route path='/addtocart' element={<AddToCard  payloads={payload}/>}/> */}
-      {/* <Route path='/products' element={<Productss/>}/> */}
-      {/* <Route path='/products' element={<Productss products={products} selectedProCatId={selectedProCatId} />} /> */}
-      {/* <Route  element={< ProCategories setProducts={setProducts} />} /> */}
+      <Route path='/cart' element={<Cart />} />
+      <Route path='/order' element={<Orders />} />
     </Routes>
   );
 }

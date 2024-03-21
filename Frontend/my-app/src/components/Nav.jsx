@@ -33,7 +33,7 @@ function Nav({ sum }) {
 
     return (
         <div>
-            <Navbar className=" bg-warning" style={{ height: "80px" }}>
+            <Navbar  className='bg-warning' style={{ height: "95px",   backgroundColor: "darkgoldenrod", }}>
                 <Container>
                     {/* <Navbar.Brand href="#home" className='fs-1 text-light'>{fName ? fName : "Nav"}</Navbar.Brand> */}
                     <Navbar.Brand href="#" className='fs-1 text-light'>

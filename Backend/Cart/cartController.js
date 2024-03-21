@@ -37,17 +37,26 @@ const createCart = async (req, res) => {
 
 
 const getCart = async (req, res) => {
-
     const { custId } = req.params;
     // return custId;
     try {
-        const query = `SELECT p.proName,p.prodImages, p.price ,cs.fName, cs.lName, c.custId, pc.proCatId, p.proID, pc.catName, 
+        const query = `SELECT  p.proName,p.prodImages, p.price ,cs.fName, cs.lName,  c.custId, pc.proCatId, p.proID, pc.catName, 
         SUM(quant) as TotalQuantity FROM cart c 
         JOIN customer cs ON cs.cstId = c.custId 
         join products p on p.proID = c.prodId
         join product_category pc on pc.proCatId=p.categoryId
         where c.custId=${custId} 
-        GROUP BY prodId, custId `;
+        GROUP BY c.custId, p.proID `;
+
+        // SELECT c.cartId, p.proName, p.prodImages, p.price, cs.fName, cs.lName, c.custId, pc.proCatId, p.proID, pc.catName, 
+        // SUM(quant) as TotalQuantity 
+        // FROM cart c 
+        // JOIN customer cs ON cs.cstId = c.custId 
+        // JOIN products p ON p.proID = c.prodId
+        // JOIN product_category pc ON pc.proCatId=p.categoryId
+        // WHERE c.custId =20
+        // GROUP BY c.cartId, p.proID, c.custId;
+
         const dbresult = await dbSql.execute(query);
         console.log("customer cart", dbresult);
         // return dbresult[0];

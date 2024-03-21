@@ -34,13 +34,14 @@ const comparePass = async (password, hash) => {
 
 
 const random = (currentValue) => {
-    if (!currentValue ) return 'OR-000001';
+    console.log(" here current value ", currentValue);
+    if (!currentValue) return 'OR-000001';
     else {
         const numericPart = parseInt(currentValue.split('-')[1]);
         const nextNumericPart = numericPart + 1;
         const nextValue = 'OR-' + ('000000' + nextNumericPart).slice(-6);
         console.log("nextValue:", nextValue);
-        return nextValue; 
+        return nextValue;
     }
 }
 
@@ -48,35 +49,23 @@ const random = (currentValue) => {
 // emptyStr = random(emptyStr); 
 // emptyStr = random(emptyStr);
 
-
-
-
-
-
-
-
-
-
-
-
 const handleResponse = (
     statusCode = 500,
     send = "Internal Server error",
     obj,
-    
     // arr,
     // validate,
 ) => {
     // console.log("obj",obj);
     return {
         statusCode: statusCode,
-        send:send,
-        obj:obj,
+        send: send,
+        obj: obj,
         // arr:arr
         // validate:validate
     }
 }
-module.exports = { createHash, comparePass, handleResponse,  random };
+module.exports = { createHash, comparePass, handleResponse, random };
 
 
 

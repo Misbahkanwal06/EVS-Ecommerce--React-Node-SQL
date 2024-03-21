@@ -1,7 +1,8 @@
 .App {
   text-align: center;
 }
-.body{
+
+.body {
   background-color: rgb(144, 137, 137);
 }
 
@@ -35,6 +36,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -107,7 +109,6 @@
 }
 
 
-
 /* pro categories */
 
 .daraz-category-item {
@@ -154,3 +155,17 @@
   font-size: 16px;
   font-weight: 500;
 }
+
+
+.g {
+  /* background-color: #c4c6c9; */
+  /* background-color: rgb(213, 207, 207); */
+  /* background-color: rgb(161, 163, 163); */
+  /* or any other light grey color you prefer */
+}
+
+/* .card-style{
+/* background-color: "darkslategray "; */
+/* background-color: #000000; */
+/* color: "white" 
+} */

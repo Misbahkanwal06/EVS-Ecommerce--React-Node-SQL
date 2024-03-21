@@ -4,13 +4,11 @@
 const dbSql = require("../dbs");
 
 const insertData = async (prodId, quantity, custId, isOrder, createdAt) => {
-    console.log("222");
     // console.log(prodId,quantity,custId,isOrder,createdAt);
     try {
         const insertQuery = `INSERT INTO cart(prodId, quant, custId,isOrder,createdAt) VALUES ?`;
         let values = []
-        // let dbresult;
-        for (let i = 0; i <= quantity; i++) {
+        for (let i = 0; i < quantity; i++) {
             values.push([prodId, 1, custId, isOrder, createdAt])
         }
         console.log("insertQuery")

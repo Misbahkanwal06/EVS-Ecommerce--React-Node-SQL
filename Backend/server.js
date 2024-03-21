@@ -9,21 +9,13 @@ const mainRoutes = require('./mainRoutes');
 const fastify = require('fastify')({
     logger: true
 });
-fastify.register(require('@fastify/cors'))
-
+fastify.register(require('@fastify/cors'));
 //ENV
 require('dotenv').config({
-    path:path.join(__dirname,`.env.${process.env.NODE_ENV}`)
+    path: path.join(__dirname, `.env.${process.env.NODE_ENV}`)
 })
-
-
-
-
-
 // END POINT
 fastify.register(mainRoutes, { prefix: "/api/v1" });
-
-
 
 // SQL DATABASE:
 const startfastifyService = async () => {

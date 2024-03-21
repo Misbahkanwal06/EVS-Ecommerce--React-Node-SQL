@@ -5,6 +5,7 @@ import Nav from '../components/Nav';
 // import './Signup.css'; // Import custom CSS for styling
 
 function Signup() {
+
     const [fname, setFName] = useState('');
     const [lname, setLName] = useState('');
     const [email, setEmail] = useState('');
@@ -69,7 +70,7 @@ function Signup() {
                 <h2 className="">Sign Up</h2>
             </div> */}
 
-            <div className='container d-flex justify-content-between  mt-5' style={{width:"850px"}}>
+            <div className='container d-flex justify-content-between  mt-5' style={{ width: "850px" }}>
                 <div>
                     <h3>Create Your Account</h3>
                 </div>

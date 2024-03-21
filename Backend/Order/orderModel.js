@@ -57,10 +57,11 @@ WHERE cartId= ${cartId};
     }
 }
 
-const viewOrderNo = async () => {
+const viewOrderNo = async (custId) => {
     try {
-        const query = `SELECT DISTINCT ordNo
-        FROM order_tbl;`;
+        // const query = `SELECT DISTINCT ordNo
+        // FROM order_tbl where  ;`;
+        const query = `SELECT  DISTINCT OT.ordNo FROM order_tbl OT  join cart c  on OT.cardId = c.cartId where custId =${custId};`
         const dbresult = await dbSql.execute(query);
         return dbresult[0];
     } catch (error) {
@@ -72,42 +73,37 @@ const viewOrderNo = async () => {
 const viewOrderNoDetails = async (orderNo) => {
     console.log("ordernumber", orderNo);
     try {
-        // const query = `SELECT prodId,
-        //     SUM(price) AS total_price,
-        //     SUM(quantity) AS total_quantity
-        // FROM 
-        //     (SELECT prodId, price, quantity
-        //      FROM order_tbl
-        //      WHERE ordNo = 'OR-000001 ') AS subquery
-        // GROUP BY 
-        //     prodId;`
-        const query = `    SELECT 
-           subquery.prodId,
-           SUM(subquery.price) AS total_price,
-           SUM(subquery.quantity) AS total_quantity,
-           (
-               SELECT p.prodImages
-               FROM order_tbl ot
-               JOIN cart c ON c.cartId = ot.cardId
-               JOIN products p ON p.proID = c.prodId
-               WHERE ot.prodId = subquery.prodId
-               AND ot.ordNo = 'OR-000001'
-               LIMIT 1
-           ) AS prodImages
-       FROM 
-           (SELECT prodId, price, quantity
-            FROM order_tbl
-            WHERE ordNo = 'OR-000001') AS subquery
-       GROUP BY 
-           subquery.prodId;`;
+        const query = `SELECT ecom.prodId,ecom.ordNo,sum(ecom.price) as price,sum(ecom.quantity) as totalQty, p.prodImages
+      FROM ecommerce.order_tbl ecom 
+      join products p on p.proID=ecom.prodId
+      where ecom.ordNo='${orderNo}' group by ecom.prodId;`;
+
+        //     const query = ` SELECT 
+        //        subquery.prodId,
+        //        SUM(subquery.price) AS total_price,
+        //        SUM(subquery.quantity) AS total_quantity,
+        //        (
+        //            SELECT p.prodImages
+        //            FROM order_tbl ot
+        //            JOIN cart c ON c.cartId = ot.cardId
+        //            JOIN products p ON p.proID = c.prodId
+        //            WHERE ot.prodId = subquery.prodId
+        //            AND ot.ordNo = '${orderNo}'
+        //            LIMIT 1
+        //        ) AS prodImages
+        //    FROM 
+        //        (SELECT prodId, price, quantity
+        //         FROM order_tbl
+        //         WHERE ordNo = ${orderNo}) AS subquery
+        //    GROUP BY 
+        //        subquery.prodId;`;
+
         const dbresult = await dbSql.execute(query);
         return dbresult[0];
     } catch (error) {
         console.log("error in model", error);
     }
 }
-
-
 
 
 // SELECT p.prodImages 

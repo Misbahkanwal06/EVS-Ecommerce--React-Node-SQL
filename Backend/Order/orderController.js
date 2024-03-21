@@ -1,7 +1,7 @@
 
 
 
-const { getData, insertdata, updateData, getlastVAlue, viewOrderNo , viewOrderNoDetails} = require('./orderModel');
+const { getData, insertdata, updateData, getlastVAlue, viewOrderNo, viewOrderNoDetails } = require('./orderModel');
 const { handleResponse, random } = require('../utils');
 
 
@@ -32,16 +32,17 @@ const createOrder = async (req, res) => {
     const array = req.body;
     // return array;
     try {
-        let emptyStr = "OR-000001";
-        let ordNo = getlastVAlue();
+        let ordNo = await getlastVAlue();
+        console.log("order no", ordNo);
         // return ordNo;
-        emptyStr = random(ordNo.ordNo);
-        // emptyStr = ordNo ? random(ordNo.ordNo) : null;
-        // let arr = [];
+        // let emptyStr =  random(ordNo.ordNo);
+        let emptyStr = random(ordNo ? ordNo.ordNo : null);
+        // return emptyStr;
         for (let i = 0; i < array.length; i++) {
-            const { custId, prodid, quantity, price } = array[i];
-            console.log("custId, prodid, quantity, price", custId, prodid, quantity, price);
-            const dbres = await getData(custId, quantity, prodid);
+            // const { custId, prodid, quantity, price } = array[i];
+            const { custId, proID, price, TotalQuantity } = array[i];
+            console.log("custId, prodid, quantity, price", custId, proID, price, TotalQuantity);
+            const dbres = await getData(custId, TotalQuantity, proID);
             // return dbres;
             for (let j = 0; j < dbres.length; j++) {
                 const orderObject = {
@@ -50,7 +51,7 @@ const createOrder = async (req, res) => {
                     amount: price,
                 }
                 let { orderNo, cartId, prodId, quant, createdAt, amount } = orderObject;
-                console.log("orderNo, cartId, prodId, price, quant, createdAt", orderNo, cartId, prodId, quant, createdAt, amount);
+                // console.log("orderNo, cartId, prodId, price, quant, createdAt", orderNo, cartId, prodId, quant, createdAt, amount);
                 // // Order obj ko db me insert kerna hy step 1
                 let dbRESULT = await insertdata(orderNo, cartId, prodId, amount, quant, createdAt);
                 // return dbRESULT;
@@ -58,38 +59,34 @@ const createOrder = async (req, res) => {
                 // us cart id ka is order true kerna hy step 2
                 let response = await updateData(cartId);
             }
-
-            // arr.push(orderObject);
-            // for (let k = 0; k < arr.length; k++) {
-            //     const { orderNo, cartId, prodId, price, quant, createdAt } = arr[i];
-            //     let dbRESULT = await insertdata(orderNo, cartId, prodId, price, quant, createdAt);
-            //     updateData(cartId);
-            //     console.log(dbRESULT);
-            //     // return dbRESULT;
-            // }
         }
-        // return arr;
     } catch (error) {
         console.log("error in controller", error);
     }
 }
+
 
 const getOrderNo = async (req, res) => {
     try {
-        const dbres = await viewOrderNo();
+        const { custId } = req.params;
+        // return custId;
+        const dbres = await viewOrderNo(custId);
         // return dbres;
-        res.send(handleResponse(201, "Inserted in card", dbres));
+        res.send(handleResponse(201, "Unique order numbers", dbres));
     } catch (error) {
         console.log("error in controller", error);
     }
 }
-
 
 const getOrderData = async (req, res) => {
     try {
         const { orderNo } = req.params;
+        // console.log(orderNo)
+        // typeof(orderNo);
+        // return orderNo;
         const dbres = await viewOrderNoDetails(orderNo);
-        return dbres;
+        // return dbres;
+        res.send(handleResponse(201, "Order Number details", dbres));
     } catch (error) {
         console.log("error in controller", error);
     }
@@ -105,7 +102,6 @@ module.exports = { createOrder, getOrderNo, getOrderData };
 // // return uniqueCode;
 // const dbresult = await insertdata(uniqueCode,cartid,proid, price, quantity,createdAt);
 // return dbresult;
-
 
 
 
